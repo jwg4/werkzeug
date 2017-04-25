@@ -576,6 +576,7 @@ class EnvironBuilder(object):
             'QUERY_STRING':         qs,
             'SERVER_NAME':          self.server_name,
             'SERVER_PORT':          str(self.server_port),
+            'SERVER_SOFTWARE':      'werkzeug.test.Client',
             'HTTP_HOST':            self.host,
             'SERVER_PROTOCOL':      self.server_protocol,
             'CONTENT_TYPE':         content_type or '',
@@ -755,6 +756,8 @@ class Client(object):
             elif isinstance(args[0], dict):
                 environ = args[0]
         if environ is None:
+            import ipdb
+            ipdb.set_trace()
             builder = EnvironBuilder(*args, **kwargs)
             try:
                 environ = builder.get_environ()
