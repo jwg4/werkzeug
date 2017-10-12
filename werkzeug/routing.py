@@ -844,6 +844,9 @@ class Rule(RuleFactory):
            and method not in self.methods:
             return False
 
+        if not values:
+            return False
+
         defaults = self.defaults or ()
 
         # all arguments required must be either in the defaults dict or
