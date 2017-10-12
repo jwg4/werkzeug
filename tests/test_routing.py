@@ -187,6 +187,20 @@ def test_defaults():
     assert adapter.build('foo', {'page': 2}) == '/foo/2'
 
 
+def test_do_not_redirect_identical_defaults():
+    map = r.Map([
+        r.Rule('/foo/<int:page>', defaults={'page': 1}, endpoint='foo'),
+        r.Rule('/bar/<int:page>', defaults={'page': 1}, endpoint='foo')
+    ])
+    adapter = map.bind('example.org', '/')
+
+    assert adapter.match('/foo/') == ('foo', {'page': 1})
+    assert adapter.match('/foo/2') == ('foo', {'page': 2})
+    assert adapter.build('foo', {}) == '/foo/'
+    assert adapter.build('foo', {'page': 1}) == '/foo/'
+    assert adapter.build('foo', {'page': 2}) == '/foo/2'
+
+
 def test_greedy():
     map = r.Map([
         r.Rule('/foo', endpoint='foo'),
