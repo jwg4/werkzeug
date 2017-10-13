@@ -195,6 +195,7 @@ def test_do_not_redirect_identical_defaults():
     adapter = map.bind('example.org', '/')
 
     assert adapter.match('/foo/') == ('foo', {'page': 1})
+    assert adapter.match('/foo/1') == ('foo', {'page': 1})
     assert adapter.match('/foo/2') == ('foo', {'page': 2})
     assert adapter.build('foo', {}) == '/foo/'
     assert adapter.build('foo', {'page': 1}) == '/foo/'
